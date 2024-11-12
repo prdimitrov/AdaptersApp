@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 public class MyCustomAdapter extends BaseAdapter {
     private Context context;
-    private String[] items;
+    private String[] items; //Data source
 
     public MyCustomAdapter(Context context, String[] items) {
         this.context = context;
@@ -41,12 +41,19 @@ public class MyCustomAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(context)
                     .inflate(R.layout.my_list_view, parent, false);
 
+            holder = new ViewHolder();
+            holder.textView = convertView.findViewById(R.id.text1); //Here the id of the TextView is
+            //passed. The TextView from my_list_view.xml!!!!!
+            convertView.setTag(holder);
         } else {
             // Reusing the View (that's recycled)
             holder = (ViewHolder) convertView.getTag();
         }
 
-        return null; //Displays the data at a position in the data set
+        //Set the data to the view
+        holder.textView.setText(items[position]);
+
+        return convertView; //Displays the data at a position in the data set
     }
 
     static class ViewHolder {

@@ -1,13 +1,15 @@
 package com.example.adaptersapp;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 public class MyCustomAdapter extends BaseAdapter {
     private Context context;
-    private String[] items;
+    private String[] items; //Data source
 
     public MyCustomAdapter(Context context, String[] items) {
         this.context = context;
@@ -16,21 +18,46 @@ public class MyCustomAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 0; //Returns the number of items in the data source
+        return items.length; //Returns the number of items in the data source
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return items[position]; //Returns the data item at the given position
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position; //Returns a unique Identifier for the item at the given position
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        return null;
+        ViewHolder holder;
+
+        if (convertView == null) {
+            //convertView is a recycled View, that can be reused to improve
+            //performance of the list
+            convertView = LayoutInflater.from(context)
+                    .inflate(R.layout.my_list_view, parent, false);
+
+            holder = new ViewHolder();
+            holder.textView = convertView.findViewById(R.id.text1); //Here the id of the TextView is
+            //passed. The TextView from my_list_view.xml!!!!!
+            convertView.setTag(holder);
+        } else {
+            // Reusing the View (that's recycled)
+            holder = (ViewHolder) convertView.getTag();
+        }
+
+        //Set the data to the view
+        holder.textView.setText(items[position]);
+
+        return convertView; //Displays the data at a position in the data set
+    }
+
+    static class ViewHolder {
+        //Holds references to the views within an item layout
+        TextView textView;
     }
 }

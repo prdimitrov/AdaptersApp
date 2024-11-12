@@ -40,9 +40,10 @@ public class MainActivity extends AppCompatActivity {
                     "Ukraine",
                     "Romania"};
             //3. Adapter - acts as a bridge between the data source and the adapter view!
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                    android.R.layout.simple_list_item_1,
-                    countries);
+//            ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+//                    android.R.layout.simple_list_item_1,
+//                    countries);
+            MyCustomAdapter adapter = new MyCustomAdapter(this, countries);
 
             listView.setAdapter(adapter);
             return insets;
